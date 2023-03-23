@@ -70,13 +70,8 @@ export class ARControls extends Behaviour
     private initialDist: number;
     private initialScale: number;
     private initialRotPos: number;
-    private initialWorldAngle: THREE.Vector3;
     timer: number = 2; //10 seconds to wait until autorotate
-    private lastAngle: number =  0;
-    private ROTATION_RATE: number = 1.5;
-    private goalYaw: number = 0;
 
-    private _origin: THREE.Vector3 = new THREE.Vector3(0,0,0);
     private _direction: THREE.Vector3 = new THREE.Vector3();
 
     private isRotateScale: boolean = false;
@@ -128,7 +123,6 @@ convertScreenspaceToRaycastSpace(vec2: Vec2) {
 *WaitThenReset() {
     while (true) {
         yield WaitForSeconds(0.5);
-        console.log("isrotatefalse");
         this.isRotateScale = false;
     }
 }
@@ -137,7 +131,6 @@ start()
 {
    window.addEventListener("pointerdown", e => {
     if (!this.context.isInAR) {
-        console.log("Wasn't in AR");
         this.isDragging = true;
     this.startCoroutine(this.showThenHideTouchCube(), FrameEvent.Update);
     GameObject.setActive(this.object2, false);
@@ -182,7 +175,6 @@ start()
     window.addEventListener("touchstart", e => {
         this.activeTouchEvent = e;
         this.initialScale = this.gameObject.scale.x;
-        this.initialWorldAngle = utils.getWorldRotation(this.gameObject);
         if(e.targetTouches.length == 1)
         {
             GameObject.setActive(this.debugTouch2, false);
