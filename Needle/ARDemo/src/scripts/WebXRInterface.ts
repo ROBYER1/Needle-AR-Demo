@@ -127,7 +127,8 @@ private hasEnteredAr: boolean = false;
     private onEnterXR(session: XRSession, frame: XRFrame) {
         console.log("[XR] session begin", session);
         //WebXR._isInXr = true;
-
+        if(frame != null)
+        {}
         // when we set unity layers objects will only be rendered on one eye
         // we set layers to sync raycasting and have a similar behaviour to unity
         const xr = this.context.renderer.xr;
