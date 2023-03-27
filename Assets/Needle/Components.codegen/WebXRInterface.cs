@@ -7,8 +7,13 @@ namespace Needle.Typescript.GeneratedComponents
 {
 	public partial class WebXRInterface : UnityEngine.MonoBehaviour
 	{
-		public void Start(){}
-		public void Update(object @frame){}
+		public UnityEngine.GameObject @testReticule;
+		public void start(){}
+		public void onXRStarted(){}
+		public void onXRStopped(){}
+		public void onBegin(object @session){}
+		public void onBeforeRender(object @frame){}
+		public void onUpdate(object @session, object @frame){}
 	}
 }
 

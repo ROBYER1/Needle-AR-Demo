@@ -17,6 +17,9 @@ import { ArrayCamera, Color, Euler, EventDispatcher, Group, Matrix4, Mesh, MeshB
 // for now we dont really need it to go through the usual update loop
 export class WebXRInterface extends Behaviour 
 {
+    @serializable(GameObject)
+    public testReticule?: GameObject;
+
     private camera: THREE.Camera;
     private controller: THREE.XRTargetRaySpace;
 
@@ -25,17 +28,21 @@ export class WebXRInterface extends Behaviour
 
     private hitTestSource: XRHitTestSource | null = null;
     private hitTestSourceRequested: boolean = false;
-
+    //Not supported in Mozilla
+    //private offsetRay: XRRay | null = null;
 //
 
 private session: XRSession;
 private sessionRoot: WebARSessionRoot | null = null;
+private rigidTransform: XRRigidTransform | null = null;
 
 private webxr: WebXR;
 
 private hasEnteredAr: boolean = false;
 
  start() {
+    //Not supported in Mozilla
+    //this.updateOffsetRay();
     WebXR.addEventListener(WebXREvent.XRStarted, this.onXRStarted.bind(this));
     WebXR.addEventListener(WebXREvent.XRStopped, this.onXRStarted.bind(this));
     this.webxr = GameObject.findObjectOfType(WebXR);
@@ -117,9 +124,11 @@ private hasEnteredAr: boolean = false;
         
 
         if (this.session) {
+            
             const pose = frame.getViewerPose(this.context.renderer.xr.getReferenceSpace());
             if(!pose) return;
                 this.onUpdate(this.session, frame);
+                this.rigidTransform = pose?.transform;
         }
     }
 
@@ -137,15 +146,27 @@ private hasEnteredAr: boolean = false;
 
     }
 
+    /*
+    private updateOffsetRay()
+    {
+        if(this.rigidTransform != null)
+        {
+        this.offsetRay = new XRRay(this.rigidTransform, new Vector3(0, 0, -1).applyMatrix4(this.context.mainCamera.matrixWorld));
+        //this.offsetRay = new XRRay(this.rigidTransform);
+        }
+    }
+    */
+
     onUpdate(session: XRSession, frame: XRFrame) {
-        
+        //Not supported in Mozilla
+        //this.updateOffsetRay();
         /*
             const referenceSpace = this.context.renderer.xr.getReferenceSpace();
             //const session = this.context.renderer.xr.getSession();
 
             if ( this.hitTestSourceRequested === false ) {
 
-                session.requestReferenceSpace( 'viewer' ).then( function ( referenceSpace ) {
+                session.requestReferenceSpace( 'viewer' ).then( function ( referenceSpa_directionvec4ce ) {
 
                     session.requestHitTestSource( { space: referenceSpace } ).then( function ( source ) {
 
@@ -187,15 +208,15 @@ console.log("requesting hit space");
 
             }
             */
-            console.log("hittestsouurce: ",this.hitTestSource);
+            //console.log("hittestsouurce: ",this.hitTestSource);
             if (!this.hitTestSource) return;
-            console.log("update");
+            //console.log("update");
             const hitTestResults = frame.getHitTestResults(this.hitTestSource);
             if (hitTestResults.length) {
-                console.log("hit");
+                //console.log("hit");
                 const hit = hitTestResults[0];
                 const referenceSpace = this.webxr.context.renderer.xr.getReferenceSpace();
-                console.log("ref space: ", referenceSpace);
+                //console.log("ref space: ", referenceSpace);
                 if (referenceSpace) {
                     const pose = hit.getPose(referenceSpace);
 
@@ -205,7 +226,10 @@ console.log("requesting hit space");
                                 const matrix = pose.transform.matrix;
                                 this.reticle.matrix.fromArray(matrix);
                                 this.reticle.matrix.premultiply(this.webxr.Rig.matrix);
-                                    console.log("place reticule");
+                                //console.log("place reticule");
+                                var worldPos = this.testReticule.getWorldPosition(this.reticle.position);
+                                console.log("worldpos: ", this.reticle.matrix);
+                                this.testReticule.position.setFromMatrixPosition(this.reticle.matrix);
                             }
                         //}
                     }
