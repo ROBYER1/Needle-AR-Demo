@@ -93,7 +93,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4619638003867035226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5560982bc1ee4b72fcb78465a0bbcb2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 064b35458555f957da9db138f9223e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Needle.Typescript.GeneratedComponents.ARReticule, Assembly-CSharp
     $ GlobalObjectId_V1-1-473aaae5ecd23d243a6717d8341aa13d-7517281336984476460-0
