@@ -1,4 +1,4 @@
-import { Camera, getComponent, Gizmos, Mathf, Rigidbody, serializable, WebARSessionRoot, WebXR, WebXRController } from "@needle-tools/engine";
+import { AssetReference, Camera, getComponent, Gizmos, Mathf, Rigidbody, serializable, WebARSessionRoot, WebXR, WebXRController } from "@needle-tools/engine";
 import { Behaviour, GameObject } from "@needle-tools/engine/src/engine-components/Component";
 import * as THREE from "three";
 import { getWorldPosition, getWorldQuaternion, setWorldPosition } from "@needle-tools/engine/src/engine/engine_three_utils";
@@ -12,13 +12,16 @@ import { Time } from "@needle-tools/engine/src/engine/engine_time";
 import { Vec3 } from "@needle-tools/engine/src/engine-schemes/vec3";
 import * as utils from "@needle-tools/engine/src/engine/engine_three_utils"
 import { ArrayCamera, Color, Euler, EventDispatcher, Group, Matrix4, Mesh, MeshBasicMaterial, Object3D, Quaternion, RingGeometry, Texture, Vector3 } from 'three';
+import { ARReticle } from "./ARReticle";
 
 // not sure if this should be a behaviour. 
 // for now we dont really need it to go through the usual update loop
 export class WebXRInterface extends Behaviour 
 {
-    @serializable(GameObject)
-    public testReticule?: GameObject;
+    @serializable(AssetReference)
+    public testReticle?: AssetReference;
+
+    private SpawnedReticule?: GameObject;
 
     private camera: THREE.Camera;
     private controller: THREE.XRTargetRaySpace;
@@ -40,13 +43,19 @@ private webxr: WebXR;
 
 private hasEnteredAr: boolean = false;
 
- start() {
+ async start() {
     //Not supported in Mozilla
     //this.updateOffsetRay();
     WebXR.addEventListener(WebXREvent.XRStarted, this.onXRStarted.bind(this));
     WebXR.addEventListener(WebXREvent.XRStopped, this.onXRStarted.bind(this));
     this.webxr = GameObject.findObjectOfType(WebXR);
-    console.log("webxr found: ", this.webxr);
+    if(GameObject.findObjectOfType(ARReticle) == null)
+    {
+        this.SpawnedReticule = await this.testReticle?.instantiate() as GameObject;
+        console.log(this.SpawnedReticule.getComponent(ARReticle));
+        //this.SpawnedReticule.addNewComponent(ARReticle);
+    }
+    //console.log("webxr found: ", this.webxr);
         this.camera = this.context.mainCamera;
 
         const geometry = new THREE.CylinderGeometry( 0.1, 0.1, 0.2, 32 ).translate( 0, 0.1, 0 );
@@ -98,7 +107,7 @@ private hasEnteredAr: boolean = false;
 
     async onBegin(session: XRSession) {
         //const context = this.webxr.context;
-        console.log("begin, checking hit test source");
+        //console.log("begin, checking hit test source");
         session.requestReferenceSpace('viewer').then((referenceSpace) => {
             session.requestHitTestSource?.call(session, { space: referenceSpace })?.then((source) => {
                 this.hitTestSource = source;
@@ -117,7 +126,7 @@ private hasEnteredAr: boolean = false;
         // const referenceSpace = renderer.xr.getReferenceSpace();
         this.session = this.context.renderer.xr.getSession();
 
-        console.log("webxr is in xr", WebXR.IsInWebXR);
+        //console.log("webxr is in xr", WebXR.IsInWebXR);
         if (WebXR.IsInWebXR === true && this.hasEnteredAr == true) {
             this.onEnterXR(this.session, frame);
         }
@@ -134,7 +143,7 @@ private hasEnteredAr: boolean = false;
 
 
     private onEnterXR(session: XRSession, frame: XRFrame) {
-        console.log("[XR] session begin", session);
+        //console.log("[XR] session begin", session);
         //WebXR._isInXr = true;
         if(frame != null)
         {}
@@ -227,9 +236,7 @@ console.log("requesting hit space");
                                 this.reticle.matrix.fromArray(matrix);
                                 this.reticle.matrix.premultiply(this.webxr.Rig.matrix);
                                 //console.log("place reticule");
-                                var worldPos = this.testReticule.getWorldPosition(this.reticle.position);
-                                console.log("worldpos: ", this.reticle.matrix);
-                                this.testReticule.position.setFromMatrixPosition(this.reticle.matrix);
+                                this.SpawnedReticule.position.setFromMatrixPosition(this.reticle.matrix);
                             }
                         //}
                     }

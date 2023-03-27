@@ -7,6 +7,7 @@ namespace Needle.Typescript.GeneratedComponents
 {
 	public partial class ARControls : UnityEngine.MonoBehaviour
 	{
+		public UnityEngine.GameObject @placementTarget;
 		public UnityEngine.GameObject @debugTouch1;
 		public UnityEngine.GameObject @debugTouch2;
 		public UnityEngine.GameObject @pointerObject;
@@ -32,6 +33,8 @@ namespace Needle.Typescript.GeneratedComponents
 		public void showThenHideTouchCube(){}
 		public void WaitThenReset(){}
 		public void start(){}
+		public void onXRStarted(){}
+		public void onXRStopped(){}
 		public void touched(){}
 		public void unTouched(){}
 		public void update(){}

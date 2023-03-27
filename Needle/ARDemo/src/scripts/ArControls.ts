@@ -15,6 +15,8 @@ import * as utils from "@needle-tools/engine/src/engine/engine_three_utils"
 export class ARControls extends Behaviour
 {
     
+    public placementTarget: GameObject;
+
     @serializable(GameObject)
     public debugTouch1?: GameObject;
     @serializable(GameObject)
@@ -76,6 +78,8 @@ export class ARControls extends Behaviour
 
     private isRotateScale: boolean = false;
 
+    private isInAr: boolean = false;
+
 public screenPointToRay(x: number, y: number, ray?: THREE.Ray): THREE.Ray {
     const origin = new THREE.Vector3(x,y,-1);
     this.convertScreenspaceToRaycastSpace(origin);
@@ -129,6 +133,8 @@ convertScreenspaceToRaycastSpace(vec2: Vec2) {
 
 start()
 {
+    WebXR.addEventListener(WebXREvent.XRStarted, this.onXRStarted.bind(this));
+    WebXR.addEventListener(WebXREvent.XRStopped, this.onXRStarted.bind(this));
    window.addEventListener("pointerdown", e => {
     if (!this.context.isInAR) {
         this.isDragging = true;
@@ -234,6 +240,20 @@ start()
     //@ts-ignore
     GameObject.setActive(this.indicator, false);
 
+}
+
+
+onXRStarted()
+{
+    console.log("XR Started!");
+    //On s
+    this.isInAr = true;
+}
+
+onXRStopped()
+{
+    console.log("XR Stopped!");
+    this.isInAr = false;
 }
 
 public touched()
@@ -352,25 +372,37 @@ update()
         {
             if(this.activeTouchEvent != null)
             {
+                if(this.isInAr == true)
+                {
+                //Always move on touch in AR
+                setWorldPosition(this.gameObject, this.placementTarget.position);
+                }
+
                 switch(this.activeTouchEvent.touches.length)
                 {
                     //Dragging
                     case 1:
                         if(this.isRotateScale == false)
                         {
-                        const touch = this.activeTouchEvent.touches[0];
-                        const ray = this.screenPointToRay(touch.clientX, touch.clientY);
-                        this._raycaster.ray = ray;
-                        const opts = new RaycastOptions();
-                        const hits = this.context.physics.raycastFromRay(ray, opts);
-                        for (let j = 0; j < hits.length; j++) {
-                                const hit = hits[j];
-                                if(hit.object.name == "GroundPlane")
+                                if(this.isInAr == false)
                                 {
-                                    setWorldPosition(this.gameObject, hit.point);
+                                //Place on ground plane
+                                
+                            const touch = this.activeTouchEvent.touches[0];
+                            const ray = this.screenPointToRay(touch.clientX, touch.clientY);
+                            this._raycaster.ray = ray;
+                            const opts = new RaycastOptions();
+                            const hits = this.context.physics.raycastFromRay(ray, opts);
+                            for (let j = 0; j < hits.length; j++) {
+                                    const hit = hits[j];
+                                    if(hit.object.name == "GroundPlane")
+                                    {
+                                        setWorldPosition(this.gameObject, hit.point);
+                                    }
                                 }
                             }
                         }
+                        
                         break;
 
                     //Double touch
