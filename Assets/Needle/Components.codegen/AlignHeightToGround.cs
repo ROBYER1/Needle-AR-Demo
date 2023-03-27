@@ -9,6 +9,7 @@ namespace Needle.Typescript.GeneratedComponents
 	{
 		// public undefined @raycaster; → Could not resolve C# type
 		public UnityEngine.GameObject[] @grounds = new UnityEngine.GameObject[]{ };
+		public System.Boolean @isInAr = false;
 		public void OnEnable(){}
 		public void update(){}
 		public void updateHeight(){}

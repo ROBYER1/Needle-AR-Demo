@@ -47,7 +47,7 @@ private hasEnteredAr: boolean = false;
     //Not supported in Mozilla
     //this.updateOffsetRay();
     WebXR.addEventListener(WebXREvent.XRStarted, this.onXRStarted.bind(this));
-    WebXR.addEventListener(WebXREvent.XRStopped, this.onXRStarted.bind(this));
+    WebXR.addEventListener(WebXREvent.XRStopped, this.onXRStopped.bind(this));
     this.webxr = GameObject.findObjectOfType(WebXR);
     if(GameObject.findObjectOfType(ARReticle) == null)
     {

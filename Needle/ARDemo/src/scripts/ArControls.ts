@@ -11,10 +11,12 @@ import { WaitForSeconds } from "@needle-tools/engine/src/engine/engine_coroutine
 import { Time } from "@needle-tools/engine/src/engine/engine_time";
 import { Vec3 } from "@needle-tools/engine/src/engine-schemes/vec3";
 import * as utils from "@needle-tools/engine/src/engine/engine_three_utils"
+import { AlignHeightToGround } from "./AlignHeightToGround";
 
 export class ARControls extends Behaviour
 {
-    
+    @serializable(AlignHeightToGround)
+    public heightAlignScript: AlignHeightToGround;
     public placementTarget: GameObject;
 
     @serializable(GameObject)
@@ -134,7 +136,11 @@ convertScreenspaceToRaycastSpace(vec2: Vec2) {
 start()
 {
     WebXR.addEventListener(WebXREvent.XRStarted, this.onXRStarted.bind(this));
-    WebXR.addEventListener(WebXREvent.XRStopped, this.onXRStarted.bind(this));
+    WebXR.addEventListener(WebXREvent.XRStopped, this.onXRStopped.bind(this));
+    if(this.heightAlignScript == null)
+    {
+        this.heightAlignScript = this.gameObject.getComponent(AlignHeightToGround);
+    }
    window.addEventListener("pointerdown", e => {
     if (!this.context.isInAR) {
         this.isDragging = true;
@@ -246,14 +252,19 @@ start()
 onXRStarted()
 {
     console.log("XR Started!");
-    //On s
+    //On start AR - set object position to 0,0,0
+    this.heightAlignScript.isInAr = true;
+    this.gameObject.position.set(0,0,0);
     this.isInAr = true;
 }
 
 onXRStopped()
 {
     console.log("XR Stopped!");
+    this.heightAlignScript.isInAr = false;
+    this.gameObject.position.set(0,0,0);
     this.isInAr = false;
+    
 }
 
 public touched()

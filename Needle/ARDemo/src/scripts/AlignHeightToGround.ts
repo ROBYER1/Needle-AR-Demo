@@ -7,6 +7,8 @@ export class AlignHeightToGround extends Behaviour
     raycaster = new Raycaster();
     grounds: GameObject[] = [];
 
+    public isInAr: Boolean = false;
+
     onEnable()
     {
         let grounds = GameObject.findObjectsOfType(IsGround, this.context).map(g => g.gameObject); // map == Linq.Select
@@ -14,7 +16,10 @@ export class AlignHeightToGround extends Behaviour
 
     update()
     {
-        this.updateHeight();
+        if(this.isInAr == false)
+        {
+            this.updateHeight();
+        }
     }
 
     updateHeight()
