@@ -85,7 +85,7 @@ private hasEnteredAr: boolean = false;
         );
         this.reticle.name = "AR Placement reticle";
         this.reticle.matrixAutoUpdate = false;
-        this.reticle.visible = true;
+        this.reticle.visible = false;
         this.context.scene.add( this.reticle );
 
         if (!this.sessionRoot || this.sessionRoot.destroyed || !this.sessionRoot.activeAndEnabled)
@@ -98,11 +98,14 @@ private hasEnteredAr: boolean = false;
         console.log("XR Started!");
         //
         this.hasEnteredAr = true;
+        this.reticle.visible = true;
     }
 
     onXRStopped()
     {
         console.log("XR Stopped!");
+        this.reticle.visible = false;
+        this.SpawnedReticule.visible = false;
     }
 
     async onBegin(session: XRSession) {
@@ -151,8 +154,6 @@ private hasEnteredAr: boolean = false;
         // we set layers to sync raycasting and have a similar behaviour to unity
         const xr = this.context.renderer.xr;
         this.onBegin(session);
-
-
     }
 
     /*

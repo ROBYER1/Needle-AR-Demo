@@ -17,6 +17,7 @@ export class ARControls extends Behaviour
 {
     @serializable(AlignHeightToGround)
     public heightAlignScript: AlignHeightToGround;
+
     public placementTarget: GameObject;
 
     @serializable(GameObject)
@@ -147,7 +148,6 @@ start()
     this.startCoroutine(this.showThenHideTouchCube(), FrameEvent.Update);
     GameObject.setActive(this.object2, false);
     GameObject.setActive(this.object3, false);
-    this.touched();
     if(e != null)
     {
     }
@@ -175,7 +175,6 @@ start()
         GameObject.setActive(this.object1, false);
         GameObject.setActive(this.object2, false);
         GameObject.setActive(this.object3, true);
-        this.unTouched();
         }
         if(e != null)
         {
@@ -204,6 +203,7 @@ start()
         this.startCoroutine(this.showThenHideTouchCube(), FrameEvent.Update);
         GameObject.setActive(this.object2, false);
         GameObject.setActive(this.object3, false);
+        this.touchedSingle();
     });
    
     //@ts-ignore
@@ -219,12 +219,12 @@ start()
         {
             this.stopCoroutine(this.WaitThenReset());
             this.startCoroutine(this.WaitThenReset());
+            this.unTouchedSingle();
         }
         this.isDragging = false;
         GameObject.setActive(this.object1, false);
         GameObject.setActive(this.object2, false);
         GameObject.setActive(this.object3, true);
-        this.unTouched();
     });
 
     const line = new THREE.Line(this.geometry);
@@ -267,14 +267,26 @@ onXRStopped()
     
 }
 
-public touched()
+private touchedSingle()
 {
+ console.log("untouched");
  this.setTargetFromRaycast();
+ if(this.isInAr == true)
+ {
+ //Always move on touch in AR
+ this.placementTarget.visible = true;
+ }
 }
 
-public unTouched()
+private unTouchedSingle()
 {
+    console.log("untouched");
  this.clearTarget();
+ if(this.isInAr == true)
+ {
+ //Always move on touch in AR
+ this.placementTarget.visible = false;
+ }
 }
 
 private contains(obj: THREE.Object3D, toSearch: THREE.Object3D): boolean {

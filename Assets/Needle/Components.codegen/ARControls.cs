@@ -36,8 +36,6 @@ namespace Needle.Typescript.GeneratedComponents
 		public void start(){}
 		public void onXRStarted(){}
 		public void onXRStopped(){}
-		public void touched(){}
-		public void unTouched(){}
 		public void update(){}
 	}
 }
