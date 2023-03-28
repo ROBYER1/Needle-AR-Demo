@@ -83,6 +83,8 @@ export class ARControls extends Behaviour
 
     private isInAr: boolean = false;
 
+    private isTouching: boolean = false;
+
 public screenPointToRay(x: number, y: number, ray?: THREE.Ray): THREE.Ray {
     const origin = new THREE.Vector3(x,y,-1);
     this.convertScreenspaceToRaycastSpace(origin);
@@ -276,6 +278,7 @@ private touchedSingle()
  //Always move on touch in AR
  this.placementTarget.visible = true;
  }
+ this.isTouching = true;
 }
 
 private unTouchedSingle()
@@ -287,6 +290,7 @@ private unTouchedSingle()
  //Always move on touch in AR
  this.placementTarget.visible = false;
  }
+ this.isTouching = false;
 }
 
 private contains(obj: THREE.Object3D, toSearch: THREE.Object3D): boolean {
@@ -385,6 +389,20 @@ update()
     {
         
     }
+    if(this.isTouch == true)
+    {
+        if(this.activeTouchEvent != null)
+        {
+            if(this.isInAr == true)
+            {
+                if(this.isTouching == true)
+                {
+                    //Always move on touch in AR
+                    setWorldPosition(this.gameObject, this.placementTarget.position);
+                }
+            }
+        }
+    }
     if(this.isDragging == true)
     {
         //Reset debug everytime
@@ -395,12 +413,6 @@ update()
         {
             if(this.activeTouchEvent != null)
             {
-                if(this.isInAr == true)
-                {
-                //Always move on touch in AR
-                setWorldPosition(this.gameObject, this.placementTarget.position);
-                }
-
                 switch(this.activeTouchEvent.touches.length)
                 {
                     //Dragging
