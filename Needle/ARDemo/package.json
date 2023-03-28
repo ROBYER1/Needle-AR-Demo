@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "scripts": {
     "start": "vite --host",
-    "build:dev": "vite build && npm run copy-files",
+    "build:dev": "tsc && vite build && npm run copy-files",
     "build:production": "npm run build:dev && npm run pack-gltf",
     "serve": "vite preview",
     "copy-files": "copy-files-from-to",
     "pack-gltf": "npm run pack-gltf --prefix node_modules/@needle-tools/engine"
   },
   "dependencies": {
-    "@needle-tools/engine": "file:../../Library/PackageCache/com.needle.engine@2.67.1-pre/package~",
-    "three": "file:../../Library/PackageCache/com.needle.engine@2.67.1-pre/package~/node_modules/three"
+    "@needle-tools/engine": "file:../../Library/PackageCache/com.needle.engine@2.67.2-pre/package~",
+    "three": "file:../../Library/PackageCache/com.needle.engine@2.67.2-pre/package~/node_modules/three"
   },
   "devDependencies": {
     "@needle-tools/needle-component-compiler": "^1.0.0",
