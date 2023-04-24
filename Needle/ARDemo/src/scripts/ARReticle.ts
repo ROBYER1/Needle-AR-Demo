@@ -1,5 +1,5 @@
 import { findObjectsOfType, serializable } from "@needle-tools/engine";
-import { Behaviour, GameObject } from "@needle-tools/engine/src/engine-components/Component";
+import { Behaviour, GameObject } from "@needle-tools/engine";
 import { ARControls } from "./ArControls";
 
 export class ARReticle extends Behaviour

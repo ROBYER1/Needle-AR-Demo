@@ -1,15 +1,15 @@
 import { AssetReference, Camera, getComponent, Gizmos, Mathf, Rigidbody, serializable, WebARSessionRoot, WebXR, WebXRController } from "@needle-tools/engine";
-import { Behaviour, GameObject } from "@needle-tools/engine/src/engine-components/Component";
+import { Behaviour, GameObject } from "@needle-tools/engine";
 import * as THREE from "three";
 import { getWorldPosition, getWorldQuaternion, setWorldPosition } from "@needle-tools/engine/src/engine/engine_three_utils";
-import { OrbitControls } from "@needle-tools/engine/src/engine-components/OrbitControls";
-import { Context, FrameEvent, XRSessionMode } from "@needle-tools/engine/src/engine/engine_setup";
-import { WebXREvent } from "@needle-tools/engine/src/engine-components/WebXR";
-import { CoroutineData, Vec2 } from "@needle-tools/engine/src/engine/engine_types";
-import { RaycastOptions } from "@needle-tools/engine/src/engine/engine_physics";
-import { WaitForSeconds } from "@needle-tools/engine/src/engine/engine_coroutine";
-import { Time } from "@needle-tools/engine/src/engine/engine_time";
-import { Vec3 } from "@needle-tools/engine/src/engine-schemes/vec3";
+import { OrbitControls } from "@needle-tools/engine";
+import { Context, FrameEvent, XRSessionMode } from "@needle-tools/engine";
+import { WebXREvent } from "@needle-tools/engine";
+import { CoroutineData, Vec2 } from "@needle-tools/engine";
+import { RaycastOptions } from "@needle-tools/engine";
+import { WaitForSeconds } from "@needle-tools/engine";
+import { Time } from "@needle-tools/engine";
+import { Vec3 } from "@needle-tools/engine";
 import * as utils from "@needle-tools/engine/src/engine/engine_three_utils"
 import { ArrayCamera, Color, Euler, EventDispatcher, Group, Matrix4, Mesh, MeshBasicMaterial, Object3D, Quaternion, RingGeometry, Texture, Vector3 } from 'three';
 import { ARReticle } from "./ARReticle";

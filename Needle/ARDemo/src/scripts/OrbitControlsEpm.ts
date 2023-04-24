@@ -1,11 +1,11 @@
-import { Behaviour, GameObject } from "@needle-tools/engine/src/engine-components/Component";
-import { Camera } from "@needle-tools/engine/src/engine-components/Camera";
+import { Behaviour, GameObject } from "@needle-tools/engine";
+import { Camera } from "@needle-tools/engine";
 import { OrbitControls as ThreeOrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { LookAtConstraint } from "@needle-tools/engine/src/engine-components/LookAtConstraint";
+import { LookAtConstraint } from "@needle-tools/engine";
 import * as THREE from "three";
 import { getWorldPosition } from "@needle-tools/engine/src/engine/engine_three_utils";
-import { Physics, RaycastOptions } from "@needle-tools/engine/src/engine/engine_physics";
-import { serializeable } from "@needle-tools/engine/src/engine/engine_serialization_decorator";
+import { Physics, RaycastOptions } from "@needle-tools/engine";
+import { serializeable } from "@needle-tools/engine";
 
 export class OrbitControlsEpm extends Behaviour {
 

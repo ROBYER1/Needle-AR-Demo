@@ -1,4 +1,4 @@
-import { Behaviour, GameObject } from "@needle-tools/engine/src/engine-components/Component";
+import { Behaviour, GameObject } from "@needle-tools/engine";
 import { Raycaster, Vector3 } from "three";
 import { IsGround } from "./IsGround";
 

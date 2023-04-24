@@ -1,4 +1,4 @@
-import { Behaviour } from "@needle-tools/engine/src/engine-components/Component";
+import { Behaviour } from "@needle-tools/engine";
 
 interface IGround { }
 
