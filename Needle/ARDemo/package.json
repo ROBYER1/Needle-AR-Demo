@@ -9,8 +9,8 @@
 	  "gltf:transform": "npm run transform --prefix node_modules/@needle-tools/gltf-build-pipeline"
 	},
   "dependencies": {
-	  "@needle-tools/engine": "^3.2.9-alpha",
-	  "three": "npm:@needle-tools/three@0.146.7"
+	  "@needle-tools/engine": "^3.7.3-alpha",
+	  "three": "npm:@needle-tools/three@0.146.10"
 	},
   "devDependencies": {
 	  "@needle-tools/needle-component-compiler": "^1.9.3",
@@ -21,7 +21,7 @@
 	  "vite": "^3.1.4",
 	  "vite-plugin-compression": "^0.5.1",
 	  "vite-plugin-mkcert": "^1.10.1",
-	  "@needle-tools/helper": "^0.6.4"
+	  "@needle-tools/helper": "^0.7.4"
 	},
   "copyFiles": [
     {
