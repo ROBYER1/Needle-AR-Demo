@@ -7,6 +7,7 @@ namespace Needle.Typescript.GeneratedComponents
 {
 	public partial class ARControls : UnityEngine.MonoBehaviour
 	{
+		public System.Boolean @arOnly = true;
 		public Needle.Typescript.GeneratedComponents.AlignHeightToGround @heightAlignScript;
 		public UnityEngine.GameObject @placementTarget;
 		public UnityEngine.GameObject @debugTouch1;

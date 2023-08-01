@@ -46,12 +46,12 @@
       "url": "https://packages.needle.tools"
     },
     "com.needle.engine-exporter": {
-      "version": "3.7.3-exp",
+      "version": "3.11.2-pre",
       "depth": 0,
       "source": "registry",
       "dependencies": {
         "com.needle.csharp-to-typescript": "0.1.0",
-        "org.khronos.unitygltf": "2.1.0-exp.1",
+        "org.khronos.unitygltf": "2.1.1-exp",
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
         "com.unity.modules.uielements": "1.0.0",
@@ -223,7 +223,7 @@
       }
     },
     "org.khronos.unitygltf": {
-      "version": "2.1.0-exp.1",
+      "version": "2.1.1-exp",
       "depth": 1,
       "source": "registry",
       "dependencies": {
